@@ -2240,19 +2240,38 @@ func (h *Handlers) GetFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+
+	// Сначала проверяем существование bucket
+	exists, err := h.minioClient.BucketExists(ctx, bucket)
+	if err != nil {
+		WriteError(w, NewInternalError(fmt.Sprintf("Ошибка проверки bucket: %v", err)))
+		return
+	}
+	if !exists {
+		WriteError(w, NewNotFoundError(fmt.Sprintf("Bucket '%s' не найден", bucket)))
+		return
+	}
+
+	// Проверяем существование объекта через Stat
+	objInfo, err := h.minioClient.StatObject(ctx, bucket, objectKey, minio.StatObjectOptions{})
+	if err != nil {
+		// Проверяем тип ошибки
+		errResp := minio.ToErrorResponse(err)
+		if errResp.Code == "NoSuchKey" || errResp.Code == "AccessDenied" {
+			WriteError(w, NewNotFoundError(fmt.Sprintf("Файл '%s' не найден в bucket '%s' или доступ запрещен. Ошибка: %s", objectKey, bucket, errResp.Message)))
+		} else {
+			WriteError(w, NewInternalError(fmt.Sprintf("Ошибка получения информации о файле: %v (Code: %s)", err, errResp.Code)))
+		}
+		return
+	}
+
+	// Получаем объект
 	obj, err := GetObject(ctx, h.minioClient, bucket, objectKey)
 	if err != nil {
-		WriteError(w, NewNotFoundError("Файл не найден"))
+		WriteError(w, NewInternalError(fmt.Sprintf("Ошибка получения файла: %v", err)))
 		return
 	}
 	defer obj.Close()
-
-	// Получаем информацию об объекте
-	objInfo, err := obj.Stat()
-	if err != nil {
-		WriteError(w, NewInternalError("Ошибка получения информации о файле"))
-		return
-	}
 
 	// Устанавливаем заголовки
 	w.Header().Set("Content-Type", objInfo.ContentType)

@@ -191,20 +191,43 @@ func ConvertMinIOURLToBackendURL(url string) string {
 		return url
 	}
 
+	// Если URL уже в формате /files/..., возвращаем как есть
+	if strings.HasPrefix(url, "/files/") {
+		return url
+	}
+
 	// Парсим URL вида: http://localhost/user-photos/users/1/photo.jpg
 	// или: http://localhost:9000/user-photos/users/1/photo.jpg
+	// или: https://minio:9000/user-photos/users/1/photo.jpg
 	parts := strings.Split(url, "/")
 
-	// Ищем bucket в URL
+	// Ищем bucket в URL (пропускаем протокол и хост)
+	bucketFound := false
+	bucketIndex := -1
 	for i, part := range parts {
+		// Пропускаем пустые части и протокол
+		if part == "" || part == "http:" || part == "https:" {
+			continue
+		}
+		// Пропускаем хост (может содержать порт)
+		if strings.Contains(part, ":") || i < 3 {
+			continue
+		}
+		// Проверяем, является ли часть bucket'ом
 		if part == BucketUserPhotos || part == BucketVerificationDocs ||
 			part == BucketPostMedia || part == BucketDonationReceipts ||
 			part == BucketChatAttachments {
-			// Нашли bucket, формируем новый URL через backend
-			bucket := part
-			objectKey := strings.Join(parts[i+1:], "/")
-			return fmt.Sprintf("/files/%s/%s", bucket, objectKey)
+			bucketFound = true
+			bucketIndex = i
+			break
 		}
+	}
+
+	if bucketFound && bucketIndex >= 0 {
+		// Нашли bucket, формируем новый URL через backend
+		bucket := parts[bucketIndex]
+		objectKey := strings.Join(parts[bucketIndex+1:], "/")
+		return fmt.Sprintf("/files/%s/%s", bucket, objectKey)
 	}
 
 	// Если не удалось распарсить, возвращаем как есть

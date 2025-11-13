@@ -168,16 +168,18 @@ def main():
         print("✗ Some buckets failed to create")
         sys.exit(1)
 
-    # Set bucket policy (optional - uncomment if you want public read access)
-    # for bucket_name in buckets:
-    #     set_bucket_policy(s3_client, bucket_name, public_read=False)
+    # Set bucket policy for public read access (через backend)
+    # Buckets остаются приватными, доступ через backend API
+    print()
+    print("ℹ Buckets настроены как приватные")
+    print("  Доступ к файлам через backend API: /files/{bucket}/{objectKey}")
+    print("  Пример: http://localhost:8080/files/user-photos/users/1/photo.jpg")
 
     print()
     print("=" * 60)
     print("✓ MinIO initialization completed successfully!")
     print(f"✓ Created {len(buckets)} buckets")
     print("=" * 60)
-
 
 if __name__ == "__main__":
     main()
