@@ -146,7 +146,9 @@ func main() {
 	protected.HandleFunc("/files/presigned-url", handlers.GetPresignedGetURL).Methods("POST")
 
 	// Публичный endpoint для получения файлов (проксирование через backend)
+	// Поддерживаем оба варианта: /files/... и /api/v1/files/...
 	router.HandleFunc("/files/{bucket}/{objectKey:.*}", handlers.GetFile).Methods("GET")
+	api.HandleFunc("/files/{bucket}/{objectKey:.*}", handlers.GetFile).Methods("GET")
 
 	// Настраиваем HTTP сервер
 	srv := &http.Server{

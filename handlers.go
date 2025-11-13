@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -2238,6 +2239,14 @@ func (h *Handlers) GetFile(w http.ResponseWriter, r *http.Request) {
 		WriteError(w, NewValidationError("Bucket и objectKey обязательны", nil))
 		return
 	}
+
+	// Декодируем URL-encoded символы в objectKey (например, %2F -> /)
+	decodedObjectKey, err := url.QueryUnescape(objectKey)
+	if err != nil {
+		// Если декодирование не удалось, используем исходное значение
+		decodedObjectKey = objectKey
+	}
+	objectKey = decodedObjectKey
 
 	ctx := r.Context()
 
