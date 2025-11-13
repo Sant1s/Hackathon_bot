@@ -1,0 +1,1931 @@
+basePath: /api/v1
+definitions:
+  main.ChangePasswordRequest:
+    properties:
+      new_password:
+        minLength: 6
+        type: string
+      old_password:
+        type: string
+    required:
+    - new_password
+    - old_password
+    type: object
+  main.ChatResponse:
+    properties:
+      created_at:
+        type: string
+      helper_id:
+        type: integer
+      id:
+        type: integer
+      needy_id:
+        type: integer
+      post_id:
+        type: integer
+    type: object
+  main.ChatWithDetails:
+    properties:
+      created_at:
+        type: string
+      helper_id:
+        type: integer
+      id:
+        type: integer
+      interlocutor:
+        $ref: '#/definitions/main.UserInfo'
+      last_message:
+        $ref: '#/definitions/main.Message'
+      needy_id:
+        type: integer
+      post:
+        $ref: '#/definitions/main.PostWithDetails'
+      post_id:
+        type: integer
+      unread_count:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  main.ChatsListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/main.ChatWithDetails'
+        type: array
+    type: object
+  main.CreateChatRequest:
+    properties:
+      post_id:
+        type: integer
+    required:
+    - post_id
+    type: object
+  main.DonationResponse:
+    properties:
+      amount:
+        type: number
+      created_at:
+        type: string
+      donor_id:
+        type: integer
+      id:
+        type: integer
+      post_id:
+        type: integer
+      receipt_url:
+        type: string
+      status:
+        type: string
+    type: object
+  main.DonationUpdateResponse:
+    properties:
+      confirmed_at:
+        type: string
+      confirmed_by:
+        type: integer
+      id:
+        type: integer
+      status:
+        type: string
+    type: object
+  main.DonationWithDetails:
+    properties:
+      amount:
+        type: number
+      confirmed_at:
+        type: string
+      confirmed_by:
+        type: integer
+      created_at:
+        type: string
+      donor:
+        $ref: '#/definitions/main.UserInfo'
+      donor_id:
+        type: integer
+      id:
+        type: integer
+      post:
+        $ref: '#/definitions/main.PostInfo'
+      post_id:
+        type: integer
+      receipt_url:
+        type: string
+      status:
+        type: string
+    type: object
+  main.DonationsListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/main.DonationWithDetails'
+        type: array
+      pagination:
+        $ref: '#/definitions/main.PaginationResponse'
+    type: object
+  main.ErrorDetail:
+    properties:
+      code:
+        type: string
+      details:
+        additionalProperties: true
+        type: object
+      message:
+        type: string
+    type: object
+  main.ErrorResponse:
+    properties:
+      error:
+        $ref: '#/definitions/main.ErrorDetail'
+    type: object
+  main.HealthCheckResponse:
+    properties:
+      database:
+        type: string
+      minio:
+        type: string
+      status:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  main.LoginRequest:
+    properties:
+      password:
+        type: string
+      phone:
+        type: string
+    required:
+    - password
+    - phone
+    type: object
+  main.LoginResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/main.User'
+      user_id:
+        type: integer
+    type: object
+  main.MarkMessagesReadRequest:
+    properties:
+      message_ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  main.MarkMessagesReadResponse:
+    properties:
+      message:
+        type: string
+      updated_count:
+        type: integer
+    type: object
+  main.Message:
+    properties:
+      attachment_url:
+        type: string
+      chat_id:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_edited:
+        type: boolean
+      is_read:
+        type: boolean
+      sender_id:
+        type: integer
+      text:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  main.MessageResponse:
+    properties:
+      attachment_url:
+        type: string
+      chat_id:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_edited:
+        type: boolean
+      is_read:
+        type: boolean
+      sender_id:
+        type: integer
+      text:
+        type: string
+    type: object
+  main.MessageUpdateResponse:
+    properties:
+      id:
+        type: integer
+      is_edited:
+        type: boolean
+      text:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  main.MessageWithDetails:
+    properties:
+      attachment_url:
+        type: string
+      chat_id:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_edited:
+        type: boolean
+      is_read:
+        type: boolean
+      sender:
+        $ref: '#/definitions/main.UserInfo'
+      sender_id:
+        type: integer
+      text:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  main.MessagesListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/main.MessageWithDetails'
+        type: array
+      pagination:
+        $ref: '#/definitions/main.PaginationResponse'
+    type: object
+  main.PaginationResponse:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  main.PhotoUploadResponse:
+    properties:
+      photo_url:
+        type: string
+    type: object
+  main.PostInfo:
+    properties:
+      amount:
+        type: number
+      collected:
+        type: number
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+  main.PostMedia:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      media_type:
+        type: string
+      media_url:
+        type: string
+      order_index:
+        type: integer
+      post_id:
+        type: integer
+    type: object
+  main.PostResponse:
+    properties:
+      amount:
+        type: number
+      collected:
+        type: number
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      status:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  main.PostUpdateResponse:
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  main.PostWithDetails:
+    properties:
+      amount:
+        type: number
+      author:
+        $ref: '#/definitions/main.UserInfo'
+      bank:
+        type: string
+      collected:
+        type: number
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      is_editable:
+        type: boolean
+      media:
+        items:
+          $ref: '#/definitions/main.PostMedia'
+        type: array
+      phone:
+        type: string
+      recipient:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  main.PostsListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/main.PostWithDetails'
+        type: array
+      pagination:
+        $ref: '#/definitions/main.PaginationResponse'
+    type: object
+  main.PresignedGetURLRequest:
+    properties:
+      bucket:
+        type: string
+      expires_in:
+        description: max 7 days
+        maximum: 604800
+        minimum: 1
+        type: integer
+      object_key:
+        type: string
+    required:
+    - bucket
+    - object_key
+    type: object
+  main.PresignedGetURLResponse:
+    properties:
+      expires_at:
+        type: string
+      url:
+        type: string
+    type: object
+  main.PresignedURLRequest:
+    properties:
+      bucket:
+        type: string
+      content_type:
+        type: string
+      expires_in:
+        description: max 7 days
+        maximum: 604800
+        minimum: 1
+        type: integer
+      object_key:
+        type: string
+    required:
+    - bucket
+    - content_type
+    - object_key
+    type: object
+  main.PresignedURLResponse:
+    properties:
+      expires_at:
+        type: string
+      object_url:
+        type: string
+      upload_url:
+        type: string
+    type: object
+  main.RatingWithDetails:
+    properties:
+      id:
+        type: integer
+      points:
+        type: integer
+      position:
+        type: integer
+      status:
+        type: string
+      total_donated:
+        type: number
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/main.UserInfo'
+      user_id:
+        type: integer
+    type: object
+  main.RatingsListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/main.RatingWithDetails'
+        type: array
+      pagination:
+        $ref: '#/definitions/main.PaginationResponse'
+    type: object
+  main.RefreshTokenResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  main.RegisterRequest:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      phone:
+        type: string
+    required:
+    - first_name
+    - last_name
+    - password
+    - phone
+    type: object
+  main.RegisterResponse:
+    properties:
+      message:
+        type: string
+      token:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  main.SuccessResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  main.UpdateDonationRequest:
+    properties:
+      status:
+        enum:
+        - confirmed
+        - rejected
+        type: string
+    required:
+    - status
+    type: object
+  main.UpdateMessageRequest:
+    properties:
+      text:
+        type: string
+    required:
+    - text
+    type: object
+  main.UpdatePostRequest:
+    properties:
+      amount:
+        type: number
+      bank:
+        type: string
+      description:
+        type: string
+      phone:
+        type: string
+      recipient:
+        type: string
+      title:
+        type: string
+    type: object
+  main.UpdateProfileRequest:
+    properties:
+      first_name:
+        type: string
+      helper_name:
+        type: string
+      last_name:
+        type: string
+    type: object
+  main.UpdateVerificationRequest:
+    properties:
+      rejection_reason:
+        type: string
+      status:
+        enum:
+        - approved
+        - rejected
+        type: string
+    required:
+    - status
+    type: object
+  main.User:
+    properties:
+      created_at:
+        type: string
+      first_name:
+        type: string
+      helper_name:
+        type: string
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      last_name:
+        type: string
+      phone:
+        type: string
+      photo_url:
+        type: string
+      role:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  main.UserInfo:
+    properties:
+      avatar:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  main.Verification:
+    properties:
+      birth_date:
+        type: string
+      consent1:
+        type: boolean
+      consent2:
+        type: boolean
+      consent3:
+        type: boolean
+      doc_type:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      inn:
+        type: string
+      last_name:
+        type: string
+      middle_name:
+        type: string
+      passport_date:
+        type: string
+      passport_issuer:
+        type: string
+      passport_number:
+        type: string
+      passport_scans_urls:
+        items:
+          type: string
+        type: array
+      passport_series:
+        type: string
+      rejection_reason:
+        type: string
+      reviewed_at:
+        type: string
+      reviewed_by:
+        type: integer
+      snils:
+        type: string
+      status:
+        type: string
+      submitted_at:
+        type: string
+      user_id:
+        type: integer
+      user_photo_url:
+        type: string
+    type: object
+  main.VerificationResponse:
+    properties:
+      id:
+        type: integer
+      message:
+        type: string
+      rejection_reason:
+        type: string
+      reviewed_at:
+        type: string
+      reviewed_by:
+        type: integer
+      status:
+        type: string
+      submitted_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  main.VerificationsListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/main.Verification'
+        type: array
+      pagination:
+        $ref: '#/definitions/main.PaginationResponse'
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+  description: API для благотворительного приложения "Помощь"
+  license:
+    name: MIT
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Благотворительное приложение API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Аутентифицирует пользователя и возвращает JWT токен
+      parameters:
+      - description: Данные входа
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.LoginResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Вход в систему
+      tags:
+      - Аутентификация
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Обновляет JWT токен пользователя
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.RefreshTokenResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Обновление токена
+      tags:
+      - Аутентификация
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Регистрирует нового пользователя в системе
+      parameters:
+      - description: Данные регистрации
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.RegisterResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Регистрация пользователя
+      tags:
+      - Аутентификация
+  /chats:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список всех чатов текущего пользователя
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.ChatsListResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Получить список чатов
+      tags:
+      - Чаты
+    post:
+      consumes:
+      - application/json
+      description: Создает новый чат между помощником и нуждающимся по посту
+      parameters:
+      - description: ID поста
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.CreateChatRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.ChatResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Создать чат
+      tags:
+      - Чаты
+  /chats/{id}/messages:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список сообщений в чате с пагинацией
+      parameters:
+      - description: ID чата
+        in: path
+        name: id
+        required: true
+        type: integer
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 50
+        description: Количество сообщений
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.MessagesListResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Получить сообщения чата
+      tags:
+      - Чаты
+    post:
+      consumes:
+      - multipart/form-data
+      description: Отправляет новое сообщение в чат (текст или вложение)
+      parameters:
+      - description: ID чата
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Текст сообщения
+        in: formData
+        name: text
+        type: string
+      - description: Вложение (изображение, до 5MB)
+        in: formData
+        name: attachment
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Отправить сообщение
+      tags:
+      - Чаты
+  /chats/{id}/messages/{message_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаляет сообщение из чата (только отправитель может удалить)
+      parameters:
+      - description: ID чата
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ID сообщения
+        in: path
+        name: message_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Успешно удалено
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Удалить сообщение
+      tags:
+      - Чаты
+    patch:
+      consumes:
+      - application/json
+      description: Редактирует текст сообщения (только отправитель может редактировать)
+      parameters:
+      - description: ID чата
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ID сообщения
+        in: path
+        name: message_id
+        required: true
+        type: integer
+      - description: Новый текст
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.UpdateMessageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.MessageUpdateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Редактировать сообщение
+      tags:
+      - Чаты
+  /chats/{id}/messages/read:
+    patch:
+      consumes:
+      - application/json
+      description: Отмечает сообщения в чате как прочитанные
+      parameters:
+      - description: ID чата
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ID сообщений (опционально, если пусто - все сообщения)
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/main.MarkMessagesReadRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.MarkMessagesReadResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Отметить сообщения как прочитанные
+      tags:
+      - Чаты
+  /donations:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список пожертвований с фильтрацией и пагинацией
+      parameters:
+      - description: Фильтр по посту
+        in: query
+        name: post_id
+        type: integer
+      - description: Фильтр по донору
+        in: query
+        name: donor_id
+        type: integer
+      - description: Фильтр по статусу
+        enum:
+        - pending
+        - confirmed
+        - rejected
+        in: query
+        name: status
+        type: string
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Количество на странице
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.DonationsListResponse'
+      summary: Получить список пожертвований
+      tags:
+      - Пожертвования
+    post:
+      consumes:
+      - multipart/form-data
+      description: Создает новое пожертвование для поста
+      parameters:
+      - description: ID поста
+        in: formData
+        name: post_id
+        required: true
+        type: integer
+      - description: Сумма пожертвования
+        in: formData
+        name: amount
+        required: true
+        type: number
+      - description: Чек/скриншот (JPEG, PNG, PDF, до 10MB)
+        in: formData
+        name: receipt
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.DonationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Создать пожертвование
+      tags:
+      - Пожертвования
+  /donations/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает детальную информацию о пожертвовании
+      parameters:
+      - description: ID пожертвования
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.DonationWithDetails'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Получить пожертвование
+      tags:
+      - Пожертвования
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет статус пожертвования (подтвердить или отклонить)
+      parameters:
+      - description: ID пожертвования
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Статус
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.UpdateDonationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.DonationUpdateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Подтвердить/отклонить пожертвование
+      tags:
+      - Пожертвования
+  /files/{bucket}/{objectKey}:
+    get:
+      consumes:
+      - application/json
+      description: 'Получает файл из MinIO и отдает его клиенту (проксирование). Путь
+        к файлу может содержать слэши, например: /files/user-photos/users/1/photo.jpg'
+      parameters:
+      - description: Название bucket
+        in: path
+        name: bucket
+        required: true
+        type: string
+      - description: Ключ объекта (путь к файлу, может содержать слэши)
+        in: path
+        name: objectKey
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: Файл
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Получить файл
+      tags:
+      - Утилиты
+  /files/presigned-url:
+    post:
+      consumes:
+      - application/json
+      description: Генерирует presigned URL для чтения (скачивания) файла из MinIO
+      parameters:
+      - description: Параметры запроса
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.PresignedGetURLRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.PresignedGetURLResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Получить presigned URL для чтения
+      tags:
+      - Утилиты
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Проверяет состояние сервера, подключение к базе данных и MinIO
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.HealthCheckResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Health check
+      tags:
+      - Утилиты
+  /posts:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список постов с пагинацией и фильтрацией
+      parameters:
+      - description: Фильтр по статусу
+        enum:
+        - active
+        - completed
+        - closed
+        - moderated
+        in: query
+        name: status
+        type: string
+      - description: Фильтр по автору
+        in: query
+        name: user_id
+        type: integer
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Количество на странице
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.PostsListResponse'
+      summary: Получить список постов
+      tags:
+      - Посты
+    post:
+      consumes:
+      - multipart/form-data
+      description: Создает новый пост о помощи
+      parameters:
+      - description: Заголовок
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: Описание
+        in: formData
+        name: description
+        required: true
+        type: string
+      - description: Целевая сумма
+        in: formData
+        name: amount
+        required: true
+        type: number
+      - description: Получатель средств
+        in: formData
+        name: recipient
+        required: true
+        type: string
+      - description: Банк получателя
+        in: formData
+        name: bank
+        required: true
+        type: string
+      - description: Телефон для связи
+        in: formData
+        name: phone
+        required: true
+        type: string
+      - description: Медиа файлы (максимум 10, каждый до 10MB)
+        in: formData
+        name: media
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.PostResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Создать пост
+      tags:
+      - Посты
+  /posts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаляет пост (только автор может удалить)
+      parameters:
+      - description: ID поста
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Успешно удалено
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Удалить пост
+      tags:
+      - Посты
+    get:
+      consumes:
+      - application/json
+      description: Возвращает детальную информацию о посте
+      parameters:
+      - description: ID поста
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.PostWithDetails'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Получить пост
+      tags:
+      - Посты
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет данные поста (только автор может редактировать)
+      parameters:
+      - description: ID поста
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные для обновления
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.UpdatePostRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.PostUpdateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Обновить пост
+      tags:
+      - Посты
+  /posts/{id}/media:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Добавляет медиа файл к существующему посту
+      parameters:
+      - description: ID поста
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Медиа файл (изображение/видео, до 10MB)
+        in: formData
+        name: media
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.PostMedia'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Добавить медиа к посту
+      tags:
+      - Посты
+  /posts/{id}/media/{media_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаляет медиа файл из поста
+      parameters:
+      - description: ID поста
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ID медиа
+        in: path
+        name: media_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Успешно удалено
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Удалить медиа из поста
+      tags:
+      - Посты
+  /ratings:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает рейтинг пользователей с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 50
+        description: Количество на странице
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.RatingsListResponse'
+      summary: Получить рейтинг пользователей
+      tags:
+      - Рейтинг
+  /ratings/me:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает рейтинг текущего пользователя с позицией
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.RatingWithDetails'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Получить свой рейтинг
+      tags:
+      - Рейтинг
+  /upload/presigned-url:
+    post:
+      consumes:
+      - application/json
+      description: Генерирует presigned URL для прямой загрузки файла в MinIO
+      parameters:
+      - description: Параметры загрузки
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.PresignedURLRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.PresignedURLResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Получить presigned URL
+      tags:
+      - Утилиты
+  /users/me:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает информацию о текущем пользователе
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.User'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Получить профиль
+      tags:
+      - Профиль
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет данные профиля текущего пользователя
+      parameters:
+      - description: Данные для обновления
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.UpdateProfileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Обновить профиль
+      tags:
+      - Профиль
+  /users/me/change-password:
+    post:
+      consumes:
+      - application/json
+      description: Изменяет пароль текущего пользователя
+      parameters:
+      - description: Старый и новый пароль
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Изменить пароль
+      tags:
+      - Профиль
+  /users/me/photo:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Загружает фото профиля пользователя
+      parameters:
+      - description: Фото профиля (JPEG, PNG, max 5MB)
+        in: formData
+        name: photo
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.PhotoUploadResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "413":
+          description: Request Entity Too Large
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Загрузить фото профиля
+      tags:
+      - Профиль
+  /verifications:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список всех заявок на верификацию с пагинацией
+      parameters:
+      - description: Фильтр по статусу
+        enum:
+        - pending
+        - approved
+        - rejected
+        in: query
+        name: status
+        type: string
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Количество на странице
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.VerificationsListResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Получить список заявок на верификацию
+      tags:
+      - Верификация
+    post:
+      consumes:
+      - multipart/form-data
+      description: Создает заявку на верификацию пользователя
+      parameters:
+      - description: Фото пользователя
+        in: formData
+        name: user_photo
+        required: true
+        type: file
+      - description: Фамилия
+        in: formData
+        name: last_name
+        required: true
+        type: string
+      - description: Имя
+        in: formData
+        name: first_name
+        required: true
+        type: string
+      - description: Отчество
+        in: formData
+        name: middle_name
+        type: string
+      - description: Дата рождения (YYYY-MM-DD)
+        in: formData
+        name: birth_date
+        required: true
+        type: string
+      - description: Серия паспорта
+        in: formData
+        name: passport_series
+        required: true
+        type: string
+      - description: Номер паспорта
+        in: formData
+        name: passport_number
+        required: true
+        type: string
+      - description: Кем выдан
+        in: formData
+        name: passport_issuer
+        required: true
+        type: string
+      - description: Дата выдачи (YYYY-MM-DD)
+        in: formData
+        name: passport_date
+        required: true
+        type: string
+      - description: Тип документа (inn или snils)
+        enum:
+        - inn
+        - snils
+        in: formData
+        name: doc_type
+        required: true
+        type: string
+      - description: ИНН
+        in: formData
+        name: inn
+        type: string
+      - description: СНИЛС
+        in: formData
+        name: snils
+        type: string
+      - description: Сканы паспорта (минимум 2)
+        in: formData
+        name: passport_scans
+        required: true
+        type: file
+      - description: Согласие 1
+        in: formData
+        name: consent1
+        required: true
+        type: boolean
+      - description: Согласие 2
+        in: formData
+        name: consent2
+        required: true
+        type: boolean
+      - description: Согласие 3
+        in: formData
+        name: consent3
+        required: true
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.VerificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Подать заявку на верификацию
+      tags:
+      - Верификация
+  /verifications/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет статус верификации (одобрить или отклонить)
+      parameters:
+      - description: ID верификации
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Статус и причина отклонения
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.UpdateVerificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.VerificationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Одобрить/отклонить верификацию
+      tags:
+      - Верификация
+  /verifications/me:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает статус верификации текущего пользователя
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.VerificationResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Получить статус верификации
+      tags:
+      - Верификация
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

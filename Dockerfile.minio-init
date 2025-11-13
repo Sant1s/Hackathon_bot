@@ -1,0 +1,15 @@
+FROM python:3.11-alpine
+
+WORKDIR /app
+
+# Install boto3 for MinIO S3 API
+RUN pip install --no-cache-dir boto3
+
+# Copy the initialization script
+COPY scripts/init_minio.py /app/init_minio.py
+
+# Make script executable
+RUN chmod +x /app/init_minio.py
+
+# Run the initialization script
+CMD ["python", "/app/init_minio.py"]
