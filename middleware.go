@@ -95,9 +95,9 @@ func CORSMiddleware(next http.Handler) http.Handler {
 		// Разрешаем доступ ко всем заголовкам ответа
 		w.Header().Set("Access-Control-Expose-Headers", "*")
 
-		// Обрабатываем preflight OPTIONS запросы
+		// Обрабатываем preflight OPTIONS запросы - ВАЖНО: обрабатываем ДО вызова next
 		if r.Method == http.MethodOptions {
-			w.WriteHeader(http.StatusOK)
+			w.WriteHeader(http.StatusNoContent)
 			return
 		}
 

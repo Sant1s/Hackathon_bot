@@ -71,10 +71,10 @@ func main() {
 	// Инициализируем роутер
 	router := mux.NewRouter()
 
-	// Применяем middleware
+	// Применяем middleware - CORS должен быть первым для обработки всех запросов
+	router.Use(CORSMiddleware)
 	router.Use(RecoverMiddleware)
 	router.Use(LoggingMiddleware)
-	router.Use(CORSMiddleware)
 
 	// Создаем обработчики
 	handlers := NewHandlers(db, minioClient, cfg)
