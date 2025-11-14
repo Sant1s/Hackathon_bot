@@ -64,37 +64,44 @@ func RoleMiddleware(roles ...string) func(http.Handler) http.Handler {
 }
 
 // CORSMiddleware обрабатывает CORS запросы для всех эндпоинтов
+// Пропускает все запросы без ограничений
 func CORSMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Получаем origin из запроса
+		// Разрешаем все origins - динамически для каждого запроса
 		origin := r.Header.Get("Origin")
-
-		// Разрешаем все origins (можно настроить конкретные домены для продакшена)
 		if origin != "" {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Access-Control-Allow-Credentials", "true")
 		} else {
 			w.Header().Set("Access-Control-Allow-Origin", "*")
 		}
 
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD")
+		// Разрешаем все возможные методы HTTP
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD, CONNECT, TRACE")
 
+		// Разрешаем все заголовки - всегда разрешаем запрошенные заголовки
 		requestedHeaders := r.Header.Get("Access-Control-Request-Headers")
 		if requestedHeaders != "" {
+			// Динамически разрешаем все запрошенные заголовки
 			w.Header().Set("Access-Control-Allow-Headers", requestedHeaders)
 		} else {
-			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin, Cache-Control, X-File-Name")
+			// Если заголовки не запрошены, разрешаем широкий список распространенных заголовков
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin, Cache-Control, X-File-Name, X-Custom-Header, Accept-Language, Content-Language, DNT, User-Agent, X-Forwarded-For, X-Real-IP")
 		}
 
-		w.Header().Set("Access-Control-Allow-Credentials", "true")
+		// Кэшируем preflight запросы на 24 часа
+		w.Header().Set("Access-Control-Max-Age", "86400")
 
-		w.Header().Set("Access-Control-Max-Age", "3600")
-		w.Header().Set("Access-Control-Expose-Headers", "Content-Length, Content-Type, Authorization")
+		// Разрешаем доступ ко всем заголовкам ответа
+		w.Header().Set("Access-Control-Expose-Headers", "*")
 
+		// Обрабатываем preflight OPTIONS запросы
 		if r.Method == http.MethodOptions {
-			w.WriteHeader(http.StatusNoContent)
+			w.WriteHeader(http.StatusOK)
 			return
 		}
 
+		// Пропускаем все остальные запросы
 		next.ServeHTTP(w, r)
 	})
 }
