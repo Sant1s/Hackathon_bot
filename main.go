@@ -71,8 +71,7 @@ func main() {
 	// Инициализируем роутер
 	router := mux.NewRouter()
 
-	// Применяем middleware - CORS должен быть первым для обработки всех запросов
-	router.Use(CORSMiddleware)
+	// Применяем middleware (кроме CORS - он будет применен на уровне HTTP handler)
 	router.Use(RecoverMiddleware)
 	router.Use(LoggingMiddleware)
 
@@ -150,10 +149,14 @@ func main() {
 	router.HandleFunc("/files/{bucket}/{objectKey:.*}", handlers.GetFile).Methods("GET")
 	api.HandleFunc("/files/{bucket}/{objectKey:.*}", handlers.GetFile).Methods("GET")
 
+	// Оборачиваем роутер в CORS handler для обработки всех запросов, включая OPTIONS
+	// Это гарантирует, что CORS заголовки будут установлены даже для несуществующих маршрутов
+	corsHandler := CORSMiddleware(router)
+
 	// Настраиваем HTTP сервер
 	srv := &http.Server{
 		Addr:         ":" + cfg.Port,
-		Handler:      router,
+		Handler:      corsHandler,
 		ReadTimeout:  15 * time.Second,
 		WriteTimeout: 15 * time.Second,
 		IdleTimeout:  60 * time.Second,
