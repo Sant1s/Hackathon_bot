@@ -884,11 +884,11 @@ func (h *Handlers) CreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Проверяем верификацию
-	if !h.db.IsUserVerified(userID) {
-		WriteError(w, NewForbiddenError("Пользователь не верифицирован"))
-		return
-	}
+	// // Проверяем верификацию
+	// if !h.db.IsUserVerified(userID) {
+	// 	WriteError(w, NewForbiddenError("Пользователь не верифицирован"))
+	// 	return
+	// }
 
 	if err := ParseMultipartForm(r, 100<<20); err != nil { // 100MB
 		WriteError(w, err)
