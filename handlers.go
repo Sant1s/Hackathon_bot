@@ -786,10 +786,23 @@ func (h *Handlers) GetPosts(w http.ResponseWriter, r *http.Request) {
 		var authorInfo *UserInfo
 		if author != nil {
 			name := fmt.Sprintf("%s %s", author.FirstName, author.LastName)
+			// Преобразуем photo_url в URL через backend проксирование, если он есть
+			var avatarURL *string
+			if author.PhotoURL != nil && *author.PhotoURL != "" {
+				backendURL := ConvertMinIOURLToBackendURL(*author.PhotoURL)
+				avatarURL = &backendURL
+			}
 			authorInfo = &UserInfo{
 				ID:     author.ID,
 				Name:   name,
-				Avatar: author.PhotoURL,
+				Avatar: avatarURL,
+			}
+		}
+
+		// Преобразуем URL медиа файлов через backend проксирование
+		for i := range media {
+			if media[i].MediaURL != "" {
+				media[i].MediaURL = ConvertMinIOURLToBackendURL(media[i].MediaURL)
 			}
 		}
 
@@ -843,10 +856,23 @@ func (h *Handlers) GetPost(w http.ResponseWriter, r *http.Request) {
 	var authorInfo *UserInfo
 	if author != nil {
 		name := fmt.Sprintf("%s %s", author.FirstName, author.LastName)
+		// Преобразуем photo_url в URL через backend проксирование, если он есть
+		var avatarURL *string
+		if author.PhotoURL != nil && *author.PhotoURL != "" {
+			backendURL := ConvertMinIOURLToBackendURL(*author.PhotoURL)
+			avatarURL = &backendURL
+		}
 		authorInfo = &UserInfo{
 			ID:     author.ID,
 			Name:   name,
-			Avatar: author.PhotoURL,
+			Avatar: avatarURL,
+		}
+	}
+
+	// Преобразуем URL медиа файлов через backend проксирование
+	for i := range media {
+		if media[i].MediaURL != "" {
+			media[i].MediaURL = ConvertMinIOURLToBackendURL(media[i].MediaURL)
 		}
 	}
 
