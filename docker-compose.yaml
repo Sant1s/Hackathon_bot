@@ -56,9 +56,9 @@ services:
         condition: service_healthy
     restart: "no"
 
-  app:
+  backend-app:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     container_name: hackathon_bot_app
     env_file:
@@ -79,6 +79,24 @@ services:
       minio:
         condition: service_healthy
     restart: unless-stopped
+
+  frontend-app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: charity-app
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "com.charity-app.description=Charity Application"
+      - "com.charity-app.version=1.0.0"
 
 volumes:
   postgres_data:

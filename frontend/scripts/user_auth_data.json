@@ -1,0 +1,34 @@
+{
+  "auth_data": [
+    {
+      "first_name": "Соколова",
+      "last_name": "Анна",
+      "password": "123qwerty",
+      "phone": "+7(954)143-78-85"
+    },
+    {
+      "first_name": "Петрова",
+      "last_name": "Мария",
+      "password": "123qwerty",
+      "phone": "+7(956)265-15-75"
+    },
+    {
+      "first_name": "Иванов",
+      "last_name": "Петр",
+      "password": "123qwerty",
+      "phone": "+7(957)265-14-78"
+    },
+    {
+      "first_name": "Смирнова",
+      "last_name": "Елена",
+      "password": "123qwerty",
+      "phone": "+7(967)465-16-70"
+    },
+    {
+      "first_name": "Козлов",
+      "last_name": "Дмитрий",
+      "password": "123qwerty",
+      "phone": "+7(957)475-19-70"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "user_id": 4,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJyb2xlIjoidXNlciIsImV4cCI6MTc2MzI0NzY1MSwiaWF0IjoxNzYzMTYxMjUxfQ.qmemJTwJ8LoOzEcHTO2aAl-kmPys2tWvhKOnXLZgvCo",
+      "message": "Пользователь успешно зарегистрирован"
+    },
+    {
+      "user_id": 6,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJyb2xlIjoidXNlciIsImV4cCI6MTc2MzI0NzY1MSwiaWF0IjoxNzYzMTYxMjUxfQ.bnHFOq3YWJsCsaWkMgMVwgEQ6mSzU8nJUTz5FuHEqpg",
+      "message": "Пользователь успешно зарегистрирован"
+    },
+    {
+      "user_id": 7,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3LCJyb2xlIjoidXNlciIsImV4cCI6MTc2MzI0NzY1MSwiaWF0IjoxNzYzMTYxMjUxfQ.PXE527mtkAyS3LHHdAoA4ifl5XxYzb3b-jFCr1BlJME",
+      "message": "Пользователь успешно зарегистрирован"
+    },
+    {
+      "user_id": 8,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4LCJyb2xlIjoidXNlciIsImV4cCI6MTc2MzI0NzY1MSwiaWF0IjoxNzYzMTYxMjUxfQ.EpQ7NGElnGA-CKglj3ZopiDKya2LmAMgLPv2tOF475s",
+      "message": "Пользователь успешно зарегистрирован"
+    },
+    {
+      "user_id": 9,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJyb2xlIjoidXNlciIsImV4cCI6MTc2MzI0NzY1MSwiaWF0IjoxNzYzMTYxMjUxfQ.nDvq6tsRon6Gf0rctJsaq_SZQB6Zo2paJBDl_9HU2jg",
+      "message": "Пользователь успешно зарегистрирован"
+    }
+  ]
+}

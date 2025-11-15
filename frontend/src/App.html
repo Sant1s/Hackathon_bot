@@ -1,0 +1,787 @@
+
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title">Меню</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-item active" data-tab="profile">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Профиль</span>
+                </div>
+                <div class="nav-item" data-tab="charity">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span>Благотворительность</span>
+                </div>
+                <div class="nav-item hidden" data-tab="rating">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span>Рейтинг</span>
+                </div>
+                <div class="nav-item" data-tab="info">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    <span>Поддержка</span>
+                </div>
+                <div class="nav-item" data-tab="rules">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span>Правила</span>
+                </div>
+            </nav>
+        </div>
+
+        <div class="card">
+            <div class="content-section active" id="profile">
+                <div class="header">
+                    <div class="header-content">
+                        <div class="icon-wrapper">
+                            <svg class="user-icon" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1>Профиль</h1>
+                            <p class="subtitle">Заполните информацию о себе</p>
+                        </div>
+                    </div>
+                    <div class="theme-toggle-wrapper">
+                        <span class="theme-toggle-label">Темная тема</span>
+                        <label class="theme-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <span class="theme-toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <form id="profileForm">
+                    <div class="photo-section">
+                        <div class="photo-wrapper">
+                            <div class="photo-preview" id="photoPreview">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <label for="photoInput" class="upload-button">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                            </label>
+                            <input type="file" id="photoInput" accept="image/*">
+                        </div>
+                        <p class="photo-hint">Нажмите, чтобы загрузить фото</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstName">Имя *</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <input type="text" id="firstName" placeholder="Введите ваше имя">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Фамилия</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <input type="text" id="lastName" placeholder="Введите вашу фамилию">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Номер телефона *</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <input type="tel" id="phone" placeholder="+7 (___) ___-__-__">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-button">Сохранить</button>
+                </form>
+
+                <div class="footer">
+                    <p class="footer-text">
+                        Нажимая "Сохранить", вы соглашаетесь с условиями использования
+                    </p>
+                </div>
+            </div>
+
+            <!-- New charity section with buttons, intro form, and posts -->
+            <div class="content-section" id="charity">
+                <div class="header">
+                    <div class="icon-wrapper">
+                        <svg class="user-icon" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h1>Благотворительность</h1>
+                    <p class="subtitle">Помогите тем, кто нуждается в поддержке</p>
+                </div>
+
+                <div id="charityInitial">
+                    <div class="charity-buttons">
+                        <button class="charity-button" id="wantToHelpBtn">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                            Я хочу помочь
+                        </button>
+                        <button class="charity-button" id="needHelpBtn">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            Мне нужна помощь
+                        </button>
+                    </div>
+                </div>
+
+                <div id="introForm" style="display: none;">
+                    <div class="intro-form">
+                        <h2>Представьтесь, пожалуйста</h2>
+                        <p>Чтобы продолжить, пожалуйста, представьтесь</p>
+                        <form id="helperForm">
+                            <div class="form-group">
+                                <label for="helperName">Ваше имя</label>
+                                <div class="input-wrapper">
+                                    <svg class="input-icon" viewBox="0 0 24 24">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <input type="text" id="helperName" placeholder="Введите ваше имя" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-button">Продолжить</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="postsList" style="display: none;">
+                    <div style="display: flex; justify-content: center; margin-bottom: 32px;">
+                        <button id="paymentDetailsBtn" class="payment-details-button">
+                            <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none;">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            Реквизиты для помощи
+                        </button>
+                    </div>
+                    <div class="posts-grid" id="postsContainer"></div>
+                </div>
+                
+                <!-- Блок отображения созданного поста пользователя -->
+                <div id="userPostView" style="display: none;">
+                    <div class="post-detail-content" style="max-width: 700px; margin: 0 auto; position: relative; overflow: visible; max-height: none;">
+                        <button id="editPostBtn" style="position: absolute; top: 16px; left: 16px; right: auto; width: 40px; height: 40px; background: rgba(15, 22, 41, 0.9); border: 1px solid #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; z-index: 10;" onmouseover="this.style.background='rgba(15, 22, 41, 1)'; this.style.borderColor='#3b82f6';" onmouseout="this.style.background='rgba(15, 22, 41, 0.9)'; this.style.borderColor='#334155';">
+                            <svg style="width: 20px; height: 20px; stroke: #3b82f6; stroke-width: 2; fill: none;" viewBox="0 0 24 24">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                        </button>
+                        <div class="post-detail-header" id="userPostMediaGallery" style="position: relative;">
+                            <!-- Медиа будут добавлены динамически -->
+                        </div>
+                        <div class="post-detail-body">
+                            <div class="detail-author">
+                                <img id="userPostAvatar" src="/placeholder.svg" alt="" class="detail-avatar">
+                                <div class="detail-author-info">
+                                    <h3 id="userPostAuthor"></h3>
+                                    <p>Нуждается в помощи</p>
+                                </div>
+                            </div>
+                            <h2 class="post-detail-title" id="userPostTitle"></h2>
+                            <p class="post-detail-description" id="userPostDescription"></p>
+                            <div class="post-detail-info">
+                                <div class="amount-display" id="userPostAmountWrapper" style="--progress-width: 0%">
+                                    <div class="amount-display-content">
+                                        <span class="amount-display-collected" id="userPostCollected"></span>
+                                        <span class="amount-display-target" id="userPostAmount"></span>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="detail-post-id" id="userPostId"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" id="rating">
+                <div class="rating-container">
+                    <div class="header" style="margin-bottom: 24px;">
+                        <div class="icon-wrapper">
+                            <svg class="user-icon" viewBox="0 0 24 24">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                </div>
+                        <h1>Рейтинг благотворителей</h1>
+                        <p class="subtitle">Топ пользователей, которые помогают другим</p>
+            </div>
+
+                    <!-- Info box about rating system -->
+                    <div class="info-box">
+                        <h3>
+                            <svg style="width: 20px; height: 20px; stroke: currentColor;" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                            Как работает система рейтинга
+                        </h3>
+                        <div style="margin-bottom: 16px; color: #94a3b8; font-size: 14px; line-height: 1.6;">
+                            <strong style="color: #f1f5f9;">50 рублей = 5 баллов.</strong> За каждое пожертвование вы получаете баллы, которые определяют ваш статус и место в рейтинге. 
+                            Значки 🥇 🥈 🥉 присваиваются топ-3 пользователям и обновляются ежедневно.
+                        </div>
+                        <div class="info-content">
+                            <div class="status-info">
+                                <div class="status-name">Друг Платформы</div>
+                                <div class="status-points">5 — 500 баллов</div>
+                            </div>
+                            <div class="status-info">
+                                <div class="status-name">Хранитель Надежды</div>
+                                <div class="status-points">501 — 2 500 баллов</div>
+                            </div>
+                            <div class="status-info">
+                                <div class="status-name">Благотворитель</div>
+                                <div class="status-points">2 501 — 5 500 баллов</div>
+                            </div>
+                            <div class="status-info">
+                                <div class="status-name">Пламенное Сердце</div>
+                                <div class="status-points">от 5 501 балла</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User's own rating -->
+                    <div class="user-rating-card" id="userRatingCard">
+                        <div class="user-rating-avatar">
+                            <svg viewBox="0 0 24 24" stroke="#64748b" stroke-width="2" fill="none">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="user-rating-info">
+                            <div class="user-rating-header">
+                                <div class="user-rating-name" id="userRatingName">Ваш рейтинг</div>
+                                <div class="rank-badge rank-1" id="userRankBadge" style="display: none;">1</div>
+                            </div>
+                            <div class="user-rating-status" id="userRatingStatus">Начните помогать, чтобы получить статус</div>
+                            <div class="user-rating-stats">
+                                <div class="rating-stat">
+                                    <div class="rating-stat-label">Всего баллов</div>
+                                    <div class="rating-stat-value" id="userTotalPoints">0</div>
+                                </div>
+                                <div class="rating-stat">
+                                    <div class="rating-stat-label">Место в рейтинге</div>
+                                    <div class="rating-stat-value" id="userRankPosition">—</div>
+                                </div>
+                                <div class="rating-stat">
+                                    <div class="rating-stat-label">Пожертвовано</div>
+                                    <div class="rating-stat-value" id="userTotalDonated">0 ₽</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leaderboard -->
+                    <div class="leaderboard">
+                        <h2 class="leaderboard-title">Топ благотворителей</h2>
+                        <div id="leaderboardList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" id="info">
+                <div class="support-container">
+                    <div class="header" style="margin-bottom: 32px;">
+                        <div class="icon-wrapper">
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                        </div>
+                        <h1>Поддержка</h1>
+                        <p class="subtitle">Мы поможем решить вашу проблему</p>
+                    </div>
+
+                    <div class="support-categories" id="supportCategories">
+                        <div class="support-category" id="authProblems">
+                            <div class="support-category-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                            <h3>Проблемы с авторизацией</h3>
+                            <p>Не могу войти в аккаунт, забыл пароль, проблемы с телефоном</p>
+                        </div>
+
+                        <div class="support-category" id="sendMoneyProblems" style="display: none;">
+                            <div class="support-category-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                            </div>
+                            <h3>Проблемы с переводом средств</h3>
+                            <p>Не могу отправить деньги, перевод не прошел, проблемы с реквизитами</p>
+                        </div>
+
+                        <div class="support-category" id="receiveMoneyProblems" style="display: none;">
+                            <div class="support-category-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
+                            </div>
+                            <h3>Проблемы с получением средств</h3>
+                            <p>Не пришли деньги, проблемы с верификацией, пост не отображается</p>
+                        </div>
+
+                        <div class="support-category" id="otherProblems">
+                            <div class="support-category-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </div>
+                            <h3>Иное</h3>
+                            <p>Другие вопросы и проблемы</p>
+                        </div>
+                    </div>
+
+                    <!-- Полоска чата поддержки (показывается после закрытия модального окна) -->
+                    <div class="support-chat-item" id="supportChatItem" style="display: none;">
+                        <div class="support-chat-item-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="support-chat-item-info">
+                            <div class="support-chat-item-name">Поддержка</div>
+                            <div class="support-chat-item-last-message" id="supportChatLastMessage">Начните диалог</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support Chat Window -->
+                <div class="support-chat-container" id="supportChatContainer" style="display: none;">
+                    <div class="support-chat-window">
+                        <div class="support-chat-header">
+                            <div class="support-chat-header-info">
+                                <div class="support-chat-avatar">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="support-chat-operator">Поддержка</div>
+                                    <div class="support-chat-status">онлайн</div>
+                                </div>
+                            </div>
+                            <button class="support-close-btn" id="closeSupportChat">
+                                <svg viewBox="0 0 24 24">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="support-chat-messages" id="supportChatMessages">
+                            <!-- Messages will be added here -->
+                        </div>
+                        <div class="support-chat-input-container">
+                            <input type="text" class="support-chat-input" id="supportChatInput" placeholder="Напишите сообщение...">
+                            <button class="support-chat-send-btn" id="supportChatSendBtn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" id="rules">
+                <div class="rules-container">
+                    <div class="header" style="margin-bottom: 32px;">
+                        <div class="icon-wrapper">
+                            <svg class="user-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                        </div>
+                        <h1>Правила платформы</h1>
+                        <p class="subtitle">Ознакомьтесь с правилами использования</p>
+                    </div>
+
+                    <!-- Platform rules -->
+                    <div class="platform-rules">
+                        <h2>Правила платформы "Max"</h2>
+                        <p class="platform-rules-subtitle">Общие положения для всех пользователей</p>
+                        
+                        <div class="platform-rule-item">
+                            <div class="platform-rule-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="platform-rule-text">
+                                <strong>Честность и прозрачность:</strong> Указывайте только реальные данные, фото и реквизиты. Любые попытки загрузить чужие документы, скрыть возраст или подменить чек приводят к блокировке.
+                            </div>
+                        </div>
+
+                        <div class="platform-rule-item">
+                            <div class="platform-rule-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="platform-rule-text">
+                                <strong>Уважение к другим:</strong> Общайтесь с получателями и благотворителями корректно. Запрещены оскорбления, давление и требования дополнительных переводов вне платформы.
+                            </div>
+                        </div>
+
+                        <div class="platform-rule-item">
+                            <div class="platform-rule-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="platform-rule-text">
+                                <strong>Конфиденциальность:</strong> Личные данные, загруженные документы и чеки используются только для проверки переводов. Не делитесь чужой информацией без разрешения.
+                            </div>
+                        </div>
+
+                        <div class="platform-rule-item">
+                            <div class="platform-rule-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="platform-rule-text">
+                                <strong>Безопасность переводов:</strong> Все пожертвования проходят через официальные реквизиты и подтверждаются загрузкой чека. Сохраняйте квитанцию до окончания проверки.
+                            </div>
+                        </div>
+
+                        <div class="platform-rule-item">
+                            <div class="platform-rule-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="platform-rule-text">
+                                <strong>Возраст и верификация:</strong> Создавать посты могут пользователи старше 18 лет с подтвержденной личностью и загруженным аватаром. Это защита от мошенничества и доверие благотворителей.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rules for helpers -->
+                    <div class="rules-section">
+                        <h2 class="rules-section-title">Для тех, кто помогает 💙</h2>
+                        <div class="rules-grid">
+                            <div class="rule-card">
+                                <div class="rule-card-number">1</div>
+                                <h3 class="rule-card-title">Представление</h3>
+                                <p class="rule-card-description">
+                                    Укажите своё имя при первом входе. Оно попадёт в лист благодарностей и будет отображаться в чате после подтверждения перевода.
+                                </p>
+                            </div>
+
+                            <div class="rule-card">
+                                <div class="rule-card-number">2</div>
+                                <h3 class="rule-card-title">Выбор получателя</h3>
+                                <p class="rule-card-description">
+                                    Изучайте посты с историями и целями сборов. В правом верхнем углу карточек указан уникальный ID — он понадобится при переводе и загрузке чека.
+                                </p>
+                            </div>
+
+                            <div class="rule-card">
+                                <div class="rule-card-number">3</div>
+                                <h3 class="rule-card-title">Пожертвование</h3>
+                                <p class="rule-card-description">
+                                    Нажмите «Реквизиты для помощи», переведите средства, укажите ID поста в комментарии и загрузите чек (JPG/PNG/PDF до 10&nbsp;МБ). Без чека перевод не попадает в обработку.
+                                </p>
+                            </div>
+
+                            <div class="rule-card">
+                                <div class="rule-card-number">4</div>
+                                <h3 class="rule-card-title">Просмотр постов</h3>
+                                <p class="rule-card-description">
+                                    В каждом посте можно просмотреть несколько изображений, используя стрелки навигации. Также можно посмотреть историю предыдущих постов автора, нажав на его аватар или имя.
+                                </p>
+                            </div>
+
+                            <div class="rule-card">
+                                <div class="rule-card-number">5</div>
+                                <h3 class="rule-card-title">Рейтинг и статусы</h3>
+                                <p class="rule-card-description">
+                                    Баллы и статусы начисляются только за подтверждённые переводы. После проверки чека ваш вклад отражается в разделе «Рейтинг».
+                                </p>
+                            </div>
+
+                            <div class="rule-card">
+                                <div class="rule-card-number">6</div>
+                                <h3 class="rule-card-title">Поддержка</h3>
+                                <p class="rule-card-description">
+                                    Во вкладке «Поддержка» выберите категорию проблемы или «Иное» для связи со службой поддержки. После первого обращения чат сохраняется, и вы можете вернуться к нему в любое время.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rules for those who need help -->
+                    <div class="rules-section">
+                        <h2 class="rules-section-title">Для тех, кому нужна помощь 🙏</h2>
+                        <div class="rules-grid">
+                            <div class="rule-card">
+                                <div class="rule-card-number">1</div>
+                                <h3 class="rule-card-title">Верификация личности</h3>
+                                <p class="rule-card-description">
+                                    Нажмите «Мне нужна помощь», заполните анкету, прикрепите паспортные сканы и загрузите собственное фото — без аватара пост создать нельзя.
+                                </p>
+                            </div>
+
+                            <div class="rule-card">
+                                <div class="rule-card-number">2</div>
+                                <h3 class="rule-card-title">Согласие с условиями</h3>
+                                <p class="rule-card-description">
+                                    Подтвердите согласие на обработку данных и честность предоставленной информации. Платформа работает только с пользователями старше 18 лет.
+                                </p>
+                            </div>
+
+                            <div class="rule-card">
+                                <div class="rule-card-number">3</div>
+                                <h3 class="rule-card-title">Проверка данных</h3>
+                                <p class="rule-card-description">
+                                    После отправки анкеты появится модальное окно с прогрессом. Обычно проверка занимает 2–5 минут. При несоответствии данных доступ блокируется.
+                                </p>
+                            </div>
+
+                            <div class="rule-card">
+                                <div class="rule-card-number">4</div>
+                                <h3 class="rule-card-title">Создание поста</h3>
+                                <p class="rule-card-description">
+                                    Загружайте несколько изображений (до 3 файлов), указывайте название, описание и сумму. Имя и первая буква фамилии отображаются автоматически на основе верификации. Изображения можно просматривать с помощью стрелок навигации.
+                                </p>
+                            </div>
+
+                            <div class="rule-card">
+                                <div class="rule-card-number">5</div>
+                                <h3 class="rule-card-title">Редактирование поста</h3>
+                                <p class="rule-card-description">
+                                    После публикации вы видите собственный пост вместе с прогрессом сбора. Редактировать можно всё, кроме целевой суммы — выбирайте её внимательно. При редактировании все загруженные вложения отображаются в специальном поле с возможностью просмотра и удаления.
+                                </p>
+                            </div>
+
+                            <div class="rule-card">
+                                <div class="rule-card-number">6</div>
+                                <h3 class="rule-card-title">Поддержка</h3>
+                                <p class="rule-card-description">
+                                    Во вкладке «Поддержка» выберите категорию проблемы (проблемы с авторизацией или получением средств) или «Иное» для связи со службой поддержки. После первого обращения чат сохраняется, и вы можете вернуться к нему в любое время.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Payment Details Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-modal-content">
+            <button class="payment-modal-close" id="closePaymentModal">
+                <svg viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <h2 style="color: #f1f5f9; font-size: 24px; font-weight: 700; margin-bottom: 24px; text-align: center;">Реквизиты для помощи</h2>
+            
+            <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                <h3 style="color: #f1f5f9; font-size: 18px; font-weight: 600; margin-bottom: 16px;">Инструкция по переводу</h3>
+                <div style="color: #94a3b8; font-size: 14px; line-height: 1.8;">
+                    <p style="margin-bottom: 12px;">Для того чтобы помочь нуждающемуся, выполните следующие шаги:</p>
+                    <ol style="margin-left: 20px; margin-bottom: 12px;">
+                        <li style="margin-bottom: 8px;">Откройте приложение вашего банка или перейдите на сайт банка</li>
+                        <li style="margin-bottom: 8px;">Выберите операцию "Перевод" или "Платеж"</li>
+                        <li style="margin-bottom: 8px;">Введите лицевой счет получателя (указан ниже)</li>
+                        <li style="margin-bottom: 8px;">Укажите сумму перевода</li>
+                        <li style="margin-bottom: 8px;"><strong style="color: #3b82f6;">Обязательно укажите в комментарии к переводу ID поста</strong> (ID указан справа вверху на карточке поста)</li>
+                        <li style="margin-bottom: 8px;">Проверьте данные и подтвердите перевод</li>
+                    </ol>
+                    <p style="color: #fbbf24; font-weight: 600; margin-top: 16px;">⚠️ Важно: Без указания ID поста в комментарии мы не сможем определить, кому именно предназначена помощь!</p>
+                </div>
+            </div>
+
+            <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                <h3 style="color: #f1f5f9; font-size: 18px; font-weight: 600; margin-bottom: 16px;">Реквизиты получателя</h3>
+                <div style="color: #94a3b8; font-size: 14px; line-height: 1.8;">
+                    <p style="margin-bottom: 12px;"><strong style="color: #f1f5f9;">Получатель:</strong> ООО "Max"</p>
+                    <p style="margin-bottom: 12px;"><strong style="color: #f1f5f9;">ИНН:</strong> 7707083893</p>
+                    <p style="margin-bottom: 12px;"><strong style="color: #f1f5f9;">КПП:</strong> 770701001</p>
+                    <p style="margin-bottom: 12px;"><strong style="color: #f1f5f9;">Банк:</strong> ПАО "Сбербанк"</p>
+                    <p style="margin-bottom: 12px;"><strong style="color: #f1f5f9;">БИК:</strong> 044525225</p>
+                    <p style="margin-bottom: 12px;"><strong style="color: #f1f5f9;">Корр. счет:</strong> 30101810400000000225</p>
+                    <p style="margin-bottom: 0;"><strong style="color: #3b82f6; font-size: 16px;">Лицевой счет:</strong> <span id="accountNumber" style="color: #3b82f6; font-size: 18px; font-weight: 700; font-family: 'Courier New', monospace; letter-spacing: 1px;">40817810099910004312</span></p>
+                </div>
+            </div>
+
+            <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 24px;">
+                <h3 style="color: #f1f5f9; font-size: 18px; font-weight: 600; margin-bottom: 16px;">QR-код для быстрого перевода</h3>
+                <p style="color: #64748b; font-size: 13px; margin-bottom: 16px;">Отсканируйте QR-код в приложении вашего банка для быстрого перевода</p>
+                <div id="qrCodeContainer" style="display: flex; justify-content: center; align-items: center; background: white; padding: 20px; border-radius: 12px; margin: 0 auto; width: fit-content;">
+                    <img src="http://qrcoder.ru/code/?%CF%EE%EB%F3%F7%E0%F2%E5%EB%FC%3A+%CE%CE%CE+%22%CC%E0%EA%F1%22%0D%0A%0D%0A%C8%CD%CD%3A+7707083893%0D%0A%0D%0A%CA%CF%CF%3A+770701001%0D%0A%0D%0A%C1%E0%ED%EA%3A+%CF%C0%CE+%22%D1%E1%E5%F0%E1%E0%ED%EA%22%0D%0A%0D%0A%C1%C8%CA%3A+044525225%0D%0A%0D%0A%CA%EE%F0%F0.+%F1%F7%E5%F2%3A+30101810400000000225%0D%0A%0D%0A%CB%E8%F6%E5%E2%EE%E9+%F1%F7%E5%F2%3A+40817810099910004312&4&0" width="276" height="276" border="0" alt="QR код для перевода" style="display: block;">
+                </div>
+            </div>
+
+            <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; border-radius: 12px; padding: 20px;">
+                <h3 style="color: #f1f5f9; font-size: 18px; font-weight: 600; margin-bottom: 16px;">Загрузка чека о переводе</h3>
+                <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
+                    После совершения перевода, пожалуйста, загрузите чек или скриншот операции для подтверждения платежа. 
+                    Это поможет нам быстрее обработать ваше пожертвование и направить средства нуждающемуся.
+                </p>
+                <div style="background: rgba(15, 22, 41, 0.5); border: 1px solid #334155; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+                    <p style="color: #64748b; font-size: 12px; margin-bottom: 8px;"><strong style="color: #f1f5f9;">Доступные форматы:</strong> JPG, PNG, PDF</p>
+                    <p style="color: #64748b; font-size: 12px; margin-bottom: 0;"><strong style="color: #f1f5f9;">Максимальный размер файла:</strong> 10 МБ</p>
+                </div>
+                <div style="border: 2px dashed #334155; border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 16px;" id="receiptUploadArea">
+                    <input type="file" id="receiptFileInput" accept="image/jpeg,image/png,image/jpg,application/pdf" style="display: none;">
+                    <svg style="width: 48px; height: 48px; stroke: #64748b; margin: 0 auto 12px;" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p style="color: #f1f5f9; font-size: 14px; font-weight: 600; margin-bottom: 4px;">Нажмите для загрузки чека</p>
+                    <p style="color: #64748b; font-size: 12px;">или перетащите файл сюда</p>
+                    <p id="receiptFileName" style="color: #3b82f6; font-size: 13px; margin-top: 8px; display: none;"></p>
+                </div>
+                <button id="submitReceiptBtn" class="submit-receipt-button" style="width: 100%; height: 48px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: none;">
+                    Отправить чек
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Processing Modal -->
+    <div class="receipt-processing-modal" id="receiptProcessingModal">
+        <div class="receipt-processing-content">
+            <div style="width: 80px; height: 80px; border: 4px solid #334155; border-top-color: #3b82f6; border-radius: 50%; margin: 0 auto 24px; animation: spin 1s linear infinite;"></div>
+            <style>
+                @keyframes spin {
+                    to { transform: rotate(360deg); }
+                }
+            </style>
+            <h2 style="color: #f1f5f9; font-size: 24px; font-weight: 700; margin-bottom: 12px; text-align: center;">Обработка чека</h2>
+            <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin-bottom: 24px; text-align: center;">
+                Мы обрабатываем ваш чек о переводе. Это может занять некоторое время. 
+                Вы получите уведомление, когда обработка будет завершена.
+            </p>
+            <p style="color: #3b82f6; font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 24px;">Обычно обработка занимает 2-5 минут</p>
+            <button id="closeReceiptProcessingModal" style="width: 100%; height: 48px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Post detail modal -->
+    <div class="post-detail" id="postDetail">
+        <div class="post-detail-content">
+            <div class="post-detail-header">
+                <img src="/placeholder.svg" alt="" class="post-detail-image" id="detailImage">
+                <button type="button" id="detailArrowPrev" class="detail-arrow detail-arrow-prev" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"></path>
+                    </svg>
+                </button>
+                <button type="button" id="detailArrowNext" class="detail-arrow detail-arrow-next" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 6l6 6-6 6"></path>
+                    </svg>
+                </button>
+                <div id="detailImageCounter" class="detail-image-counter" style="display: none;"></div>
+                <button class="close-button" id="closeDetail">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="post-detail-body">
+                <!-- Adding author section with avatar -->
+                <div class="detail-author" id="detailAuthorSection" style="cursor: pointer;">
+                    <img src="/placeholder.svg" alt="" class="detail-avatar" id="detailAuthorAvatar">
+                    <div class="detail-author-info">
+                        <h3 id="detailAuthorName"></h3>
+                        <p>Нуждается в помощи</p>
+                    </div>
+                </div>
+
+                <h2 class="post-detail-title" id="detailTitle"></h2>
+                <p class="post-detail-description" id="detailDescription"></p>
+                
+                <div class="post-detail-info">
+                        <div class="amount-display" id="detailAmount" style="--progress-width: 0%"></div>
+                    </div>
+                <div class="detail-post-id" id="detailPostId"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Posts History Modal -->
+    <div class="post-detail" id="userPostsHistoryModal" style="display: none;">
+        <div class="post-detail-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+            <div style="padding: 24px; border-bottom: 1px solid #334155;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <img src="/placeholder.svg" alt="" id="historyAuthorAvatar" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #334155;">
+                        <div>
+                            <h2 style="color: #f1f5f9; font-size: 24px; font-weight: 600; margin: 0;" id="historyAuthorName"></h2>
+                            <p style="color: #64748b; font-size: 14px; margin: 4px 0 0 0;">История постов</p>
+                        </div>
+                    </div>
+                    <button class="close-button" id="closeHistoryModal" style="position: relative; top: 0; right: 0;">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div style="padding: 24px;">
+                <div class="posts-grid" id="historyPostsContainer"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
