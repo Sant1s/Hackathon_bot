@@ -85,6 +85,22 @@ const Charity = ({ onOpenPost }) => {
   const [postLoading, setPostLoading] = useState(false);
   const [postError, setPostError] = useState(null);
 
+  // Используем ref для хранения blob URL'ов для очистки
+  const blobUrlsRef = useRef([]);
+  
+  // Очистка blob URL'ов при размонтировании
+  useEffect(() => {
+    return () => {
+      // Очищаем все blob URL'ы при размонтировании компонента
+      blobUrlsRef.current.forEach(url => {
+        if (url && url.startsWith('blob:')) {
+          URL.revokeObjectURL(url);
+        }
+      });
+      blobUrlsRef.current = [];
+    };
+  }, []); // Выполняется только при размонтировании
+
   useEffect(() => {
     // Восстанавливаем дополнительные данные из localStorage при монтировании компонента
     const phone = getPhone();
@@ -96,7 +112,7 @@ const Charity = ({ onOpenPost }) => {
           clearInterval(checkPhone);
           // Восстанавливаем mode сначала
           const savedMode = getStorageItem('charityMode', currentPhone);
-          if (savedMode && savedMode !== 'initial') {
+          if (savedMode && savedMode !== 'initial' && savedMode !== 'processing') {
             setMode(savedMode);
             console.log('Восстановлен режим после получения номера телефона:', savedMode);
           }
@@ -107,7 +123,10 @@ const Charity = ({ onOpenPost }) => {
       return () => clearInterval(checkPhone);
     }
     
-    restoreDataForPhone(phone);
+    // Не восстанавливаем данные, если текущий режим - 'processing' (предотвращаем мерцание во время создания поста)
+    if (mode !== 'processing') {
+      restoreDataForPhone(phone);
+    }
   }, [mode]); // Запускаем при изменении mode, чтобы восстановить данные при восстановлении режима
   
   // Функция для восстановления данных для конкретного номера телефона
@@ -135,7 +154,13 @@ const Charity = ({ onOpenPost }) => {
           setPassportData(savedPassportData);
           const savedScans = getStorageItem('passportScansPreview', phone);
           if (savedScans) {
-            setPassportScansPreview(savedScans);
+            // Фильтруем старые blob URL'ы, оставляем только base64
+            const validScans = Array.isArray(savedScans) 
+              ? savedScans.filter(s => s && !s.startsWith('blob:'))
+              : [];
+            if (validScans.length > 0) {
+              setPassportScansPreview(validScans);
+            }
           }
           console.log('Восстановлены данные паспорта');
         } catch (e) {
@@ -159,12 +184,19 @@ const Charity = ({ onOpenPost }) => {
               media: savedCreatedPost.media || []
             });
             if (savedCreatedPost.images && savedCreatedPost.images.length > 0) {
-              setHelperPostMediaPreview(savedCreatedPost.images);
+              // Фильтруем старые blob URL'ы, оставляем только base64
+              const validImages = Array.isArray(savedCreatedPost.images)
+                ? savedCreatedPost.images.filter(img => img && !img.startsWith('blob:'))
+                : [];
+              if (validImages.length > 0) {
+                setHelperPostMediaPreview(validImages);
+              }
             }
-            if (savedCreatedPost.avatar) {
+            if (savedCreatedPost.avatar && !savedCreatedPost.avatar.startsWith('blob:')) {
               setHelperPostAvatarPreview(savedCreatedPost.avatar);
             }
-            if (savedMode && savedMode !== mode) {
+            // Не переключаем режим обратно, если текущий режим уже 'viewPost' или 'createPost' (предотвращаем мерцание)
+            if (savedMode && savedMode !== mode && mode !== 'viewPost' && mode !== 'createPost') {
               setMode(savedMode);
             }
             console.log('Восстановлен созданный пост');
@@ -175,20 +207,28 @@ const Charity = ({ onOpenPost }) => {
       }
       
       // Если был режим createPost, восстанавливаем данные формы
-      if (modeToCheck === 'createPost') {
+      // НО не переключаем режим, если текущий режим - 'viewPost' или 'processing' (предотвращаем мерцание)
+      if (modeToCheck === 'createPost' && mode !== 'viewPost' && mode !== 'processing') {
         const savedPostData = getStorageItem('helperPostData', phone);
         if (savedPostData) {
           try {
             setHelperPostData(savedPostData);
             const savedMedia = getStorageItem('helperPostMediaPreview', phone);
             if (savedMedia) {
-              setHelperPostMediaPreview(savedMedia);
+              // Фильтруем старые blob URL'ы, оставляем только base64
+              const validMedia = Array.isArray(savedMedia) 
+                ? savedMedia.filter(m => m && !m.startsWith('blob:'))
+                : [];
+              if (validMedia.length > 0) {
+                setHelperPostMediaPreview(validMedia);
+              }
             }
             const savedAvatar = getStorageItem('helperPostAvatarPreview', phone);
-            if (savedAvatar) {
+            if (savedAvatar && !savedAvatar.startsWith('blob:')) {
               setHelperPostAvatarPreview(savedAvatar);
             }
-            if (savedMode && savedMode !== mode) {
+            // Не переключаем режим обратно, если текущий режим уже 'createPost' (предотвращаем мерцание)
+            if (savedMode && savedMode !== mode && mode !== 'createPost') {
               setMode(savedMode);
             }
             console.log('Восстановлены данные формы создания поста');
@@ -242,9 +282,9 @@ const Charity = ({ onOpenPost }) => {
     const handleStorageChange = () => {
       const phone = getPhone();
       if (phone) {
-        // Восстанавливаем mode
+        // Восстанавливаем mode, но не переключаем, если текущий режим - 'processing', 'viewPost' или 'createPost' (предотвращаем мерцание)
         const savedMode = getStorageItem('charityMode', phone);
-        if (savedMode && savedMode !== mode) {
+        if (savedMode && savedMode !== mode && savedMode !== 'processing' && mode !== 'processing' && mode !== 'viewPost' && mode !== 'createPost') {
           setMode(savedMode);
           console.log('Восстановлен режим из storage:', savedMode);
         }
@@ -279,8 +319,8 @@ const Charity = ({ onOpenPost }) => {
     }
     
     const phone = getPhone();
-    // Не сохраняем 'initial' в localStorage
-    if (mode && mode !== 'initial') {
+    // Не сохраняем 'initial' и 'processing' в localStorage (processing - временный режим)
+    if (mode && mode !== 'initial' && mode !== 'processing') {
       console.log('Сохранение режима в localStorage:', mode, 'для телефона:', phone);
       setStorageItem('charityMode', mode, phone);
     } else if (mode === 'initial') {
@@ -325,9 +365,15 @@ const Charity = ({ onOpenPost }) => {
               media: parsedPost.media || []
             });
             if (parsedPost.images && parsedPost.images.length > 0) {
-              setHelperPostMediaPreview(parsedPost.images);
+              // Фильтруем старые blob URL'ы, оставляем только base64
+              const validImages = Array.isArray(parsedPost.images)
+                ? parsedPost.images.filter(img => img && !img.startsWith('blob:'))
+                : [];
+              if (validImages.length > 0) {
+                setHelperPostMediaPreview(validImages);
+              }
             }
-            if (parsedPost.avatar) {
+            if (parsedPost.avatar && !parsedPost.avatar.startsWith('blob:')) {
               setHelperPostAvatarPreview(parsedPost.avatar);
             }
             setMode('viewPost');
@@ -343,17 +389,29 @@ const Charity = ({ onOpenPost }) => {
             setPassportData(savedPassportData);
             const savedScans = getStorageItem('passportScansPreview', phone);
             if (savedScans) {
-              setPassportScansPreview(savedScans);
+              // Фильтруем старые blob URL'ы, оставляем только base64
+              const validScans = Array.isArray(savedScans) 
+                ? savedScans.filter(s => s && !s.startsWith('blob:'))
+                : [];
+              if (validScans.length > 0) {
+                setPassportScansPreview(validScans);
+              }
             }
             const savedPostData = getStorageItem('helperPostData', phone);
             if (savedPostData) {
               setHelperPostData(savedPostData);
               const savedMedia = getStorageItem('helperPostMediaPreview', phone);
               if (savedMedia) {
-                setHelperPostMediaPreview(savedMedia);
+                // Фильтруем старые blob URL'ы, оставляем только base64
+                const validMedia = Array.isArray(savedMedia) 
+                  ? savedMedia.filter(m => m && !m.startsWith('blob:'))
+                  : [];
+                if (validMedia.length > 0) {
+                  setHelperPostMediaPreview(validMedia);
+                }
               }
               const savedAvatar = getStorageItem('helperPostAvatarPreview', phone);
-              if (savedAvatar) {
+              if (savedAvatar && !savedAvatar.startsWith('blob:')) {
                 setHelperPostAvatarPreview(savedAvatar);
               }
             }
@@ -370,7 +428,13 @@ const Charity = ({ onOpenPost }) => {
             setPassportData(savedPassportData);
             const savedScans = getStorageItem('passportScansPreview', phone);
             if (savedScans) {
-              setPassportScansPreview(savedScans);
+              // Фильтруем старые blob URL'ы, оставляем только base64
+              const validScans = Array.isArray(savedScans) 
+                ? savedScans.filter(s => s && !s.startsWith('blob:'))
+                : [];
+              if (validScans.length > 0) {
+                setPassportScansPreview(validScans);
+              }
             }
             setMode('passport');
             return;
@@ -387,7 +451,13 @@ const Charity = ({ onOpenPost }) => {
         // Восстанавливаем превью сканов
         const savedScans = getStorageItem('passportScansPreview', phone);
         if (savedScans) {
-          setPassportScansPreview(savedScans);
+          // Фильтруем старые blob URL'ы, оставляем только base64
+          const validScans = Array.isArray(savedScans) 
+            ? savedScans.filter(s => s && !s.startsWith('blob:'))
+            : [];
+          if (validScans.length > 0) {
+            setPassportScansPreview(validScans);
+          }
         }
         // Если верификация уже пройдена, переходим к созданию поста или просмотру
         const verificationStatus = getStorageItem('verificationStatus', phone);
@@ -409,23 +479,35 @@ const Charity = ({ onOpenPost }) => {
               setMode('viewPost');
               // Восстанавливаем превью фотографий из сохраненного поста или из localStorage
               if (savedCreatedPost.images && savedCreatedPost.images.length > 0) {
-                setHelperPostMediaPreview(savedCreatedPost.images);
+                // Фильтруем старые blob URL'ы, оставляем только base64
+                const validImages = Array.isArray(savedCreatedPost.images)
+                  ? savedCreatedPost.images.filter(img => img && !img.startsWith('blob:'))
+                  : [];
+                if (validImages.length > 0) {
+                  setHelperPostMediaPreview(validImages);
+                }
               } else {
                 const savedMedia = getStorageItem('helperPostMediaPreview', phone);
                 if (savedMedia) {
                   try {
-                    setHelperPostMediaPreview(savedMedia);
+                    // Фильтруем старые blob URL'ы, оставляем только base64
+                    const validMedia = Array.isArray(savedMedia) 
+                      ? savedMedia.filter(m => m && !m.startsWith('blob:'))
+                      : [];
+                    if (validMedia.length > 0) {
+                      setHelperPostMediaPreview(validMedia);
+                    }
                   } catch (e) {
                     console.error('Ошибка восстановления превью фотографий:', e);
                   }
                 }
               }
               // Восстанавливаем превью аватара
-              if (savedCreatedPost.avatar) {
+              if (savedCreatedPost.avatar && !savedCreatedPost.avatar.startsWith('blob:')) {
                 setHelperPostAvatarPreview(savedCreatedPost.avatar);
               } else {
                 const savedAvatar = getStorageItem('helperPostAvatarPreview', phone);
-                if (savedAvatar) {
+                if (savedAvatar && !savedAvatar.startsWith('blob:')) {
                   setHelperPostAvatarPreview(savedAvatar);
                 }
               }
@@ -441,10 +523,16 @@ const Charity = ({ onOpenPost }) => {
               setHelperPostData(savedPostData);
               const savedMedia = getStorageItem('helperPostMediaPreview', phone);
               if (savedMedia) {
-                setHelperPostMediaPreview(savedMedia);
+                // Фильтруем старые blob URL'ы, оставляем только base64
+                const validMedia = Array.isArray(savedMedia) 
+                  ? savedMedia.filter(m => m && !m.startsWith('blob:'))
+                  : [];
+                if (validMedia.length > 0) {
+                  setHelperPostMediaPreview(validMedia);
+                }
               }
               const savedAvatar = getStorageItem('helperPostAvatarPreview', phone);
-              if (savedAvatar) {
+              if (savedAvatar && !savedAvatar.startsWith('blob:')) {
                 setHelperPostAvatarPreview(savedAvatar);
               }
             }
@@ -531,20 +619,44 @@ const Charity = ({ onOpenPost }) => {
       return true;
     });
 
-    const newPreviews = newFiles.map(file => URL.createObjectURL(file));
-    setPassportScansPreview(prev => [...prev, ...newPreviews]);
-    setPassportData(prev => ({
-      ...prev,
-      passportScans: [...prev.passportScans, ...newFiles]
-    }));
+    // Очищаем старые blob URL'ы, если они были
+    passportScansPreview.forEach(preview => {
+      if (preview && preview.startsWith('blob:')) {
+        URL.revokeObjectURL(preview);
+      }
+    });
     
-    // Сохраняем превью в localStorage
+    // Конвертируем файлы в base64
     const phone = getPhone();
-    setStorageItem('passportScansPreview', [...passportScansPreview, ...newPreviews], phone);
+    const readers = newFiles.map(file => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => resolve(event.target.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    });
+    
+    Promise.all(readers).then(newPreviews => {
+      setPassportScansPreview(prev => [...prev, ...newPreviews]);
+      setPassportData(prev => ({
+        ...prev,
+        passportScans: [...prev.passportScans, ...newFiles]
+      }));
+      setStorageItem('passportScansPreview', [...passportScansPreview, ...newPreviews], phone);
+    }).catch(() => {
+      alert('Ошибка при чтении файлов');
+    });
   };
 
   const removePassportScan = (index) => {
     const phone = getPhone();
+    // Очищаем blob URL, если это blob URL
+    const previewToRemove = passportScansPreview[index];
+    if (previewToRemove && previewToRemove.startsWith('blob:')) {
+      URL.revokeObjectURL(previewToRemove);
+    }
+    
     const newPreviews = passportScansPreview.filter((_, i) => i !== index);
     const newFiles = passportData.passportScans.filter((_, i) => i !== index);
     setPassportScansPreview(newPreviews);
@@ -778,11 +890,25 @@ const Charity = ({ onOpenPost }) => {
         alert('Неподдерживаемый формат файла. Используйте WebP или JPEG.');
         return;
       }
-             const phone = getPhone();
-             const preview = URL.createObjectURL(file);
-             setHelperPostAvatarPreview(preview);
-             setHelperPostData(prev => ({ ...prev, avatar: file }));
-             setStorageItem('helperPostAvatarPreview', preview, phone);
+      const phone = getPhone();
+      
+      // Очищаем старый blob URL, если он был
+      if (helperPostAvatarPreview && helperPostAvatarPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(helperPostAvatarPreview);
+      }
+      
+      // Конвертируем файл в base64 для сохранения
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64Preview = event.target.result;
+        setHelperPostAvatarPreview(base64Preview);
+        setHelperPostData(prev => ({ ...prev, avatar: file }));
+        setStorageItem('helperPostAvatarPreview', base64Preview, phone);
+      };
+      reader.onerror = () => {
+        alert('Ошибка при чтении файла');
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -807,23 +933,50 @@ const Charity = ({ onOpenPost }) => {
       return true;
     });
 
-           const phone = getPhone();
-           const newPreviews = newFiles.map(file => URL.createObjectURL(file));
-           setHelperPostMediaPreview(prev => [...prev, ...newPreviews]);
-           setHelperPostData(prev => ({
-             ...prev,
-             media: [...prev.media, ...newFiles]
-           }));
-           setStorageItem('helperPostMediaPreview', [...helperPostMediaPreview, ...newPreviews], phone);
+    const phone = getPhone();
+    
+    // Очищаем старые blob URL'ы, если они были
+    helperPostMediaPreview.forEach(preview => {
+      if (preview && preview.startsWith('blob:')) {
+        URL.revokeObjectURL(preview);
+      }
+    });
+    
+    // Конвертируем файлы в base64
+    const readers = newFiles.map(file => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => resolve(event.target.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    });
+    
+    Promise.all(readers).then(newPreviews => {
+      setHelperPostMediaPreview(prev => [...prev, ...newPreviews]);
+      setHelperPostData(prev => ({
+        ...prev,
+        media: [...prev.media, ...newFiles]
+      }));
+      setStorageItem('helperPostMediaPreview', [...helperPostMediaPreview, ...newPreviews], phone);
+    }).catch(() => {
+      alert('Ошибка при чтении файлов');
+    });
   };
 
   const removeHelperPostMedia = (index) => {
-           const phone = getPhone();
-           const newPreviews = helperPostMediaPreview.filter((_, i) => i !== index);
-           const newFiles = helperPostData.media.filter((_, i) => i !== index);
-           setHelperPostMediaPreview(newPreviews);
-           setHelperPostData(prev => ({ ...prev, media: newFiles }));
-           setStorageItem('helperPostMediaPreview', newPreviews, phone);
+    const phone = getPhone();
+    // Очищаем blob URL, если это blob URL
+    const previewToRemove = helperPostMediaPreview[index];
+    if (previewToRemove && previewToRemove.startsWith('blob:')) {
+      URL.revokeObjectURL(previewToRemove);
+    }
+    
+    const newPreviews = helperPostMediaPreview.filter((_, i) => i !== index);
+    const newFiles = helperPostData.media.filter((_, i) => i !== index);
+    setHelperPostMediaPreview(newPreviews);
+    setHelperPostData(prev => ({ ...prev, media: newFiles }));
+    setStorageItem('helperPostMediaPreview', newPreviews, phone);
   };
 
   const handleHelperPostSubmit = async (e) => {
@@ -962,6 +1115,8 @@ const Charity = ({ onOpenPost }) => {
         // Обновляем список постов
         await loadPosts(true);
         
+        // Сохраняем режим 'viewPost' в localStorage перед установкой, чтобы избежать конфликтов
+        setStorageItem('charityMode', 'viewPost', phone);
         setMode('viewPost');
       } else {
         console.warn('Ответ от API не содержит данных:', response);
@@ -1908,6 +2063,9 @@ const Charity = ({ onOpenPost }) => {
             <button
               onClick={() => {
                 // Переключаемся в режим редактирования
+                // Сохраняем режим 'createPost' в localStorage перед установкой, чтобы избежать конфликтов
+                const phone = getPhone();
+                setStorageItem('charityMode', 'createPost', phone);
                 setMode('createPost');
               }}
               style={{
