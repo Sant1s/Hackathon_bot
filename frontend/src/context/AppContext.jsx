@@ -111,7 +111,7 @@ export const AppProvider = ({ children }) => {
         }
         
         // Если изображения - это строки, но относительные пути, преобразуем в полные URL
-        const baseUrl = 'http://82.202.142.141:8080';
+        const baseUrl = 'https://namico.ru';
         images = images.map(img => {
           if (typeof img === 'string' && img.trim() !== '') {
             // Если это относительный путь, добавляем базовый URL
@@ -160,7 +160,7 @@ export const AppProvider = ({ children }) => {
         
         // Если аватар - это относительный путь, преобразуем в полный URL
         if (authorAvatar && typeof authorAvatar === 'string') {
-          const baseUrl = 'http://82.202.142.141:8080';
+          const baseUrl = 'https://namico.ru';
           if (authorAvatar.startsWith('/')) {
             authorAvatar = baseUrl + authorAvatar;
           } else if (!authorAvatar.startsWith('http://') && !authorAvatar.startsWith('https://')) {
@@ -216,7 +216,7 @@ export const AppProvider = ({ children }) => {
       // Обрабатываем photo_url для правильного отображения фото
       if (profileData && profileData.photo_url) {
         let photoUrl = profileData.photo_url;
-        const baseUrl = 'http://82.202.142.141:8080';
+        const baseUrl = 'https://namico.ru';
         
         // Если photo_url - это относительный путь, добавляем базовый URL
         if (!photoUrl.startsWith('http') && !photoUrl.startsWith('data:')) {

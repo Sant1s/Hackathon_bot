@@ -19,7 +19,7 @@ import type { Configuration } from './configuration.ts';
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 
-export const BASE_PATH = "http://localhost:8080/api/v1".replace(/\/+$/, "");
+export const BASE_PATH = "https://namico.ru/api/v1".replace(/\/+$/, "");
 
 export const COLLECTION_FORMATS = {
     csv: ",",

@@ -23,7 +23,7 @@ axios.interceptors.request.use(
 // Создаем конфигурацию с вашим сервером
 // Используем функцию для получения токена, чтобы он всегда был актуальным
 const apiConfig = new Configuration({
-  basePath: 'http://82.202.142.141:8080/api/v1', // Базовый URL вашего API
+  basePath: 'https://namico.ru/api/v1', // Базовый URL вашего API
   accessToken: getToken, // Передаем функцию, чтобы токен всегда брался актуальный
 });
 

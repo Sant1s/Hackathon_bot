@@ -60,7 +60,7 @@ const Profile = ({ isLightTheme, onThemeToggle }) => {
         // Обрабатываем фото URL, если это относительный путь
         let photoUrl = savedProfileData.photo || null;
         if (photoUrl && !photoUrl.startsWith('http') && !photoUrl.startsWith('data:')) {
-          const apiBaseUrl = 'http://82.202.142.141:8080/api/v1';
+          const apiBaseUrl = 'https://namico.ru/api/v1';
           const cleanPath = photoUrl.startsWith('/') ? photoUrl.substring(1) : photoUrl;
           photoUrl = `${apiBaseUrl}/${cleanPath}`;
         }
@@ -119,7 +119,7 @@ const Profile = ({ isLightTheme, onThemeToggle }) => {
       
       // Если photo_url еще не обработан (для совместимости со старыми данными), обрабатываем его
       if (photoUrl && !photoUrl.startsWith('http') && !photoUrl.startsWith('data:')) {
-        const baseUrl = 'http://82.202.142.141:8080';
+        const baseUrl = 'https://namico.ru';
         // Для файлов просто добавляем базовый URL без /api/v1
         if (photoUrl.startsWith('/files')) {
           photoUrl = baseUrl + photoUrl;

@@ -40,7 +40,7 @@ const ApiTest = () => {
       
       if (err.message === 'Network Error' || err.code === 'ERR_NETWORK') {
         errorMessage = 'Network Error: Не удалось подключиться к серверу. Возможные причины:\n' +
-          '1. Сервер недоступен (http://82.202.142.141:8080)\n' +
+          '1. Сервер недоступен (https://namico.ru)\n' +
           '2. Проблема CORS - сервер не разрешает запросы с localhost:3000\n' +
           '3. Блокировка файрволом или антивирусом';
       } else if (err.response) {
@@ -50,7 +50,7 @@ const ApiTest = () => {
         } else if (err.response.status === 404) {
           errorMessage = `404 Not Found: Endpoint не найден.\n` +
             `Проверьте:\n` +
-            `1. Правильность пути: http://82.202.142.141:8080/api/v1/health\n` +
+            `1. Правильность пути: https://namico.ru/api/v1/health\n` +
             `2. Возможно, endpoint не реализован на сервере\n` +
             `3. Попробуйте другой endpoint (например, /posts)`;
         } else if (err.response.status === 0) {
@@ -83,7 +83,7 @@ const ApiTest = () => {
   return (
     <div style={{ padding: '20px', border: '1px solid #ccc', margin: '20px', borderRadius: '8px' }}>
       <h3>Тест подключения к API</h3>
-      <p><strong>Сервер:</strong> http://82.202.142.141:8080</p>
+      <p><strong>Сервер:</strong> https://namico.ru</p>
       <p><strong>Статус:</strong> {status}</p>
       
       <button 
@@ -114,8 +114,8 @@ const ApiTest = () => {
           <div style={{ marginTop: '15px', fontSize: '13px', color: '#666' }}>
             <p><strong>Что проверить:</strong></p>
             <ul style={{ marginLeft: '20px', marginTop: '5px' }}>
-              <li>Проверьте доступность сервера: <a href="http://82.202.142.141:8080" target="_blank" rel="noopener noreferrer" style={{ color: '#007bff' }}>http://82.202.142.141:8080</a></li>
-              <li>Попробуйте другие endpoints: <a href="http://82.202.142.141:8080/api/v1/posts" target="_blank" rel="noopener noreferrer" style={{ color: '#007bff' }}>/api/v1/posts</a></li>
+              <li>Проверьте доступность сервера: <a href="https://namico.ru" target="_blank" rel="noopener noreferrer" style={{ color: '#007bff' }}>https://namico.ru</a></li>
+              <li>Попробуйте другие endpoints: <a href="https://namico.ru/api/v1/posts" target="_blank" rel="noopener noreferrer" style={{ color: '#007bff' }}>/api/v1/posts</a></li>
               <li>Проверьте консоль браузера (F12) для деталей</li>
               <li>Если видите CORS ошибку - нужно настроить CORS на бэкенде</li>
             </ul>
