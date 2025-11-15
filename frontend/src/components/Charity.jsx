@@ -2175,7 +2175,7 @@ const Charity = ({ onOpenPost }) => {
               <h3 style={{ color: '#f1f5f9', fontSize: '18px', fontWeight: '600', marginBottom: '16px' }}>QR-код для быстрого перевода</h3>
               <p style={{ color: '#64748b', fontSize: '13px', marginBottom: '16px' }}>Отсканируйте QR-код в приложении вашего банка для быстрого перевода</p>
               <div id="qrCodeContainer" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'white', padding: '20px', borderRadius: '12px', margin: '0 auto', width: 'fit-content' }}>
-                <img src="http://qrcoder.ru/code/?%CF%EE%EB%F3%F7%E0%F2%E5%EB%FC%3A+%CE%CE%CE+%22%CC%E0%EA%F1%22%0D%0A%0D%0A%C8%CD%CD%3A+7707083893%0D%0A%0D%0A%CA%CF%CF%3A+770701001%0D%0A%0D%0A%C1%E0%ED%EA%3A+%CF%C0%CE+%22%D1%E1%E5%F0%E1%E0%ED%EA%22%0D%0A%0D%0A%C1%C8%CA%3A+044525225%0D%0A%0D%0A%CA%EE%F0%F0.+%F1%F7%E5%F2%3A+30101810400000000225%0D%0A%0D%0A%CB%E8%F6%E5%E2%EE%E9+%F1%F7%E5%F2%3A+40817810099910004312&4&0" width="276" height="276" border="0" alt="QR код для перевода" style={{ display: 'block' }} />
+                <img src="https://sbp.nspk.ru/api/img/QR_with_logo.png" width="276" height="276" border="0" alt="QR код для перевода" style={{ display: 'block' }} />
               </div>
             </div>
 
