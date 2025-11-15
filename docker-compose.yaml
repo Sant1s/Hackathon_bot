@@ -40,7 +40,7 @@ services:
 
   minio-init:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile.minio-init
     container_name: hackathon_bot_minio_init
     env_file:
